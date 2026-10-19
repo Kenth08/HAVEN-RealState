@@ -13,6 +13,8 @@ export const site = {
     phone: '+63 997 728 7201',
     offices: ['Los Angeles, California'],
   },
+  // Credit line in the footer (this is a portfolio piece).
+  author: { name: 'Kenth08', url: 'https://github.com/Kenth08' },
 };
 
 export const navigation = [

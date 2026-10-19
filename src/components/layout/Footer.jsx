@@ -47,7 +47,12 @@ export default function Footer() {
       <div className="container-site flex flex-col gap-4 border-t border-line-inverse py-6 text-xs text-stone sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-col gap-2">
           <p>
-            © {new Date().getFullYear()} {site.name}. Featured listings and prices are sample homes for illustration.
+            © {new Date().getFullYear()} {site.name}. A concept portfolio project: homes, prices and addresses are fictional.
+          </p>
+          <p>
+            Designed and built by{' '}
+            <a href={site.author.url} className="link-line text-paper" target="_blank" rel="noreferrer">{site.author.name}</a>
+            .
           </p>
           <p className="flex flex-wrap gap-x-5 gap-y-1">
             <Link to="/privacy" className="link-line text-paper">Privacy</Link>

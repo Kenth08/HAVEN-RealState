@@ -39,5 +39,7 @@ export default defineConfig(({ mode }) => {
     // React DOM + Motion + React Router account for ~170 kB gzipped; that is
     // expected for this stack, so only warn if the bundle grows well past it.
     build: { chunkSizeWarningLimit: 650 },
+    // Unit tests only; end-to-end specs in tests/e2e run under Playwright.
+    test: { include: ['src/**/*.test.js'] },
   };
 });

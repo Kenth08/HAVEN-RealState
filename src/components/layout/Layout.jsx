@@ -45,6 +45,8 @@ export default function Layout() {
         <Header />
         <motion.main
           id="main"
+          tabIndex={-1}
+          className="outline-none"
           key={pathname}
           initial={pathname === firstPath ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}

@@ -1,6 +1,10 @@
 # HAVEN — Where Life Moves Next
 
-A cinematic real-estate website built with React, Vite, Tailwind CSS, Motion and Lenis. It is a portfolio and demo project. All listings, prices and contact details are fictional, and nothing is sent to a server.
+[![CI](https://github.com/Kenth08/HAVEN-RealState/actions/workflows/ci.yml/badge.svg)](https://github.com/Kenth08/HAVEN-RealState/actions/workflows/ci.yml)
+
+**Live site:** https://haven-real-state-taupe.vercel.app
+
+A cinematic real-estate website built with React, Vite, Tailwind CSS, Motion and Lenis. It is a concept portfolio project: every listing, price and address is fictional. The contact and viewing forms are real and deliver to the author's inbox through Web3Forms.
 
 ## Quick start
 
@@ -10,7 +14,11 @@ npm run dev        # http://localhost:5173
 npm run build      # production build → dist/
 npm run preview    # serve the production build on http://localhost:4173
 npm run lint
+npm test           # unit tests (Vitest)
+npm run test:e2e   # end-to-end tests (Playwright) against the production build
 ```
+
+Before the first end-to-end run, install the browser once with `npx playwright install chromium`.
 
 Requires Node 20.19+ (tested on Node 24).
 
@@ -28,7 +36,7 @@ The key is meant to be public: it can only send to the inbox it was created for.
 - **Spam** is filtered with a hidden honeypot field.
 - **If sending fails**, the visitor keeps their text and gets an email link as a fallback.
 
-> **Windows note:** if `npm run build` fails with `Cannot find module '@rolldown/binding-win32-x64-msvc'`, npm skipped Rolldown's native binary. This is a known npm optional-dependency bug. It is pinned in `devDependencies` here. If it recurs, delete `node_modules` and `package-lock.json` and reinstall.
+> **Windows note:** if `npm run build` fails with `Cannot find module '@rolldown/binding-win32-x64-msvc'`, npm skipped Rolldown's native binary. This is a known npm optional-dependency bug. It is listed in `optionalDependencies` here, so Linux and macOS installs (such as Vercel's) skip it. If it recurs, delete `node_modules` and `package-lock.json` and reinstall.
 
 ### Publishing (GitHub → Vercel)
 
@@ -168,6 +176,19 @@ All three are fixed (see *Scroll and animation architecture*). The navigation re
 
 It passes 29/29 at 1536×864, 1280×720 and 390×844 (through the mobile menu), and with reduced motion. The active-link checks (during a glide, during manual scrolling both ways, at the footer, and keyboard Enter) also pass.
 
+## Tests and CI
+
+GitHub Actions (`.github/workflows/ci.yml`) runs lint, unit tests and end-to-end tests on every push and pull request. A failed run uploads the Playwright report.
+
+- **Unit tests:** `src/lib/filterProperties.test.js` covers filtering, price ranges, sorting and the URL round trip.
+- **End-to-end tests:** in `tests/e2e`, run at desktop (1440×900) and mobile (Pixel 7) sizes:
+  - the home sections, intro loader, skip link, 404s and legal pages;
+  - search: filters, URL sync and reload, the min/max swap, the empty state, sorting, and card → property → back;
+  - inquiries: validation and focus, successful send, failed send with the email fallback, and the pre-filled viewing form;
+  - header navigation with an active search, direct section links, the mobile menu (focus, Escape, link scroll) and horizontal overflow.
+
+  The Web3Forms endpoint is mocked or blocked in every test, so the suite never sends email. Any console error fails the test.
+
 ## Verification (last run)
 
 - `npm run lint` and `npm run build` pass with no errors.
@@ -183,7 +204,7 @@ It passes 29/29 at 1536×864, 1280×720 and 390×844 (through the mobile menu), 
 
 ## Limitations and simulated features
 
-- **No backend.** Listings are static sample data. Inquiries are delivered by Web3Forms once `VITE_WEB3FORMS_KEY` is set.
+- **No backend.** Listings are static sample data. Inquiries are delivered by Web3Forms using the built-in public key (or `VITE_WEB3FORMS_KEY`).
 - **Intro loader.** On a first visit, the hero is covered for at least 1.1 s (at most 3 s) while its layers decode. The LCP element paints underneath the loader, so the measured LCP is earlier than the moment the hero visibly appears.
 - **Bundle size.** The JS bundle is about 173 kB gzipped, mostly React DOM, Motion and React Router; Lenis adds about 5 kB. Scrolling the whole home page loads about 4.6 MB of lazy images on desktop.
 - **Photos and attribution.** Photographer names could not be retrieved (Unsplash's API sits behind bot protection here). The Unsplash License does not require attribution; photo ids are listed in `src/data/photos.js`.
