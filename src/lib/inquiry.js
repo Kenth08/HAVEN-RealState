@@ -2,10 +2,12 @@ import { site } from '../config/site';
 
 // Inquiries are delivered by Web3Forms (https://web3forms.com): a free
 // form-to-email service that works from a static site with no backend.
-// The access key is designed to be public (it only allows sending to the
-// inbox it was created for), so it is read from a Vite env variable.
+// The access key is public by design (Web3Forms: "use it in client side
+// code"; it can only send to the inbox it was created for), so it ships with
+// the site. VITE_WEB3FORMS_KEY can override it per environment.
 const ENDPOINT = 'https://api.web3forms.com/submit';
-const ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_KEY;
+const DEFAULT_ACCESS_KEY = '820ddc13-587b-48b7-91e6-ef082909b8fe';
+const ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_KEY || DEFAULT_ACCESS_KEY;
 
 export const inquiriesEnabled = Boolean(ACCESS_KEY);
 

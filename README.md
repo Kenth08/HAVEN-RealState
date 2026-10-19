@@ -35,8 +35,8 @@ The key is meant to be public: it can only send to the inbox it was created for.
 - `vercel.json` handles deep links: refreshing `/properties/...` serves the app instead of a 404. It also sets long caching on built assets and basic security headers.
 - `robots.txt` and `sitemap.xml` are generated on every build from the listing data.
 - Environment variables on Vercel (Project → Settings → Environment Variables):
-  - `VITE_WEB3FORMS_KEY`: required for the inquiry forms.
-  - `VITE_SITE_URL`: the live address, e.g. `https://haven-realstate.vercel.app`. If it isn't set, that address is the default. It is used for canonical URLs, social previews and the sitemap.
+  - `VITE_WEB3FORMS_KEY`: optional. The site's public Web3Forms key is built in (`src/lib/inquiry.js`); set this only to use a different key.
+  - `VITE_SITE_URL`: optional. The default is the live address `https://haven-real-state-taupe.vercel.app`. Set it if you connect a custom domain. It is used for canonical URLs, social previews and the sitemap.
 - Vercel Web Analytics loads only on the deployed site. Enable it in the project's **Analytics** tab.
 - Social preview image: `public/og-image.jpg`, 1200×630, a capture of the hero.
 - App icons: `public/apple-touch-icon.png`, `icon-192/512.png`, `icon-maskable-512.png` and `site.webmanifest`.
