@@ -1,0 +1,172 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/instrument-sans';
+@import '@fontsource/instrument-serif/400.css';
+@import 'lenis/dist/lenis.css';
+
+/* Metric-matched local fallbacks so the web-font swap causes no layout
+   shift. Sans values match next/font's output for Instrument Sans vs Arial;
+   serif values were computed from the font files vs Times New Roman. */
+@font-face {
+  font-family: 'Instrument Sans Fallback';
+  src: local('Arial');
+  size-adjust: 102.74%;
+  ascent-override: 94.42%;
+  descent-override: 24.33%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Instrument Serif Fallback';
+  src: local('Times New Roman');
+  size-adjust: 81.03%;
+  ascent-override: 122.18%;
+  descent-override: 38.26%;
+  line-gap-override: 0%;
+}
+
+/* ------------------------------------------------------------------
+   Design tokens
+   Palette and the sans face follow the FIND reference site; Instrument
+   Serif carries the editorial display type seen in the reference video.
+   ------------------------------------------------------------------ */
+@theme {
+  --color-ink: #151717;
+  --color-ink-soft: #232626;
+  --color-paper: #ededed;
+  --color-bone: #f6f5f3;
+  --color-mute: #5b5f5f; /* body copy on paper — 5.6:1 */
+  --color-stone: #b3b3b3; /* body copy on ink — 8.9:1 */
+  --color-line: rgb(21 23 23 / 0.14);
+  --color-line-inverse: rgb(237 237 237 / 0.18);
+  --color-accent: #d92424;
+
+  --font-sans: 'Instrument Sans Variable', 'Instrument Sans Fallback', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: 'Instrument Serif', 'Instrument Serif Fallback', ui-serif, Georgia, serif;
+
+  --text-display: clamp(3rem, 7.2vw, 7.5rem);
+  --text-display--line-height: 0.92;
+  --text-display--letter-spacing: -0.02em;
+  --text-title: clamp(2.25rem, 4.6vw, 4.75rem);
+  --text-title--line-height: 0.98;
+  --text-title--letter-spacing: -0.015em;
+  --text-lead: clamp(1.5rem, 2.6vw, 2.5rem);
+  --text-lead--line-height: 1.15;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+
+  --spacing-gutter: clamp(1rem, 3.2vw, 2.75rem);
+  --spacing-section: clamp(5rem, 11vw, 10rem);
+  --container-site: 90rem;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-paper font-sans text-ink antialiased;
+    font-feature-settings: 'ss01', 'cv11';
+  }
+
+  ::selection {
+    @apply bg-ink text-paper;
+  }
+
+  :focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+
+  img {
+    @apply select-none;
+  }
+
+  input,
+  select,
+  textarea,
+  button {
+    font: inherit;
+    color: inherit;
+  }
+}
+
+@utility eyebrow {
+  @apply text-[0.7rem] font-medium tracking-[0.18em] uppercase;
+}
+
+@utility btn {
+  @apply inline-flex items-center gap-3 rounded-full px-6 py-3.5 text-sm font-medium transition-colors duration-300;
+}
+
+@layer components {
+  .container-site {
+    @apply mx-auto w-full max-w-(--container-site) px-gutter;
+  }
+
+  /* Underline that draws in from the left on hover / focus. */
+  .link-line {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.5s var(--ease-out-expo);
+  }
+  .link-line:hover,
+  .link-line:focus-visible,
+  .link-line[aria-current] {
+    background-size: 100% 1px;
+  }
+
+  .btn-light {
+    @apply btn bg-paper text-ink hover:bg-white;
+  }
+  .btn-dark {
+    @apply btn bg-ink text-paper hover:bg-ink-soft;
+  }
+  .btn-outline {
+    @apply btn border border-current hover:bg-ink hover:text-paper;
+  }
+
+  /* Arrow nudges forward when its parent link is hovered. */
+  .arrow-nudge {
+    transition: transform 0.5s var(--ease-out-expo);
+  }
+  .group:hover .arrow-nudge,
+  .group:focus-visible .arrow-nudge {
+    transform: translateX(0.3rem);
+  }
+
+  .field {
+    @apply w-full appearance-none border-0 border-b border-line bg-transparent py-3 text-base outline-none transition-colors placeholder:text-mute/70 focus:border-ink;
+  }
+  .field-label {
+    @apply eyebrow mb-1 block text-mute;
+  }
+  .select-chevron {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23151717' stroke-width='1.5'%3E%3Cpath d='m2 4 4 4 4-4'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.15rem center;
+    padding-right: 1.5rem;
+  }
+
+  .text-outline {
+    color: transparent;
+    -webkit-text-stroke: 1px var(--outline-color, var(--color-stone));
+  }
+
+  .sr-only-focusable:not(:focus) {
+    @apply sr-only;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
