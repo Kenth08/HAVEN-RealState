@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/Kenth08/HAVEN-RealState/actions/workflows/ci.yml/badge.svg)](https://github.com/Kenth08/HAVEN-RealState/actions/workflows/ci.yml)
 
-**Live site:** https://haven-real-state-taupe.vercel.app
+**Live site:** https://haven-estate-kenth.vercel.app
 
 A cinematic real-estate website built with React, Vite, Tailwind CSS, Motion and Lenis. It is a concept portfolio project: every listing, price and address is fictional. The contact and viewing forms are real and deliver to the author's inbox through Web3Forms.
 
@@ -44,7 +44,7 @@ The key is meant to be public: it can only send to the inbox it was created for.
 - `robots.txt` and `sitemap.xml` are generated on every build from the listing data.
 - Environment variables on Vercel (Project → Settings → Environment Variables):
   - `VITE_WEB3FORMS_KEY`: optional. The site's public Web3Forms key is built in (`src/lib/inquiry.js`); set this only to use a different key.
-  - `VITE_SITE_URL`: optional. The default is the live address `https://haven-real-state-taupe.vercel.app`. Set it if you connect a custom domain. It is used for canonical URLs, social previews and the sitemap.
+  - `VITE_SITE_URL`: optional. The default is the live address `https://haven-estate-kenth.vercel.app`. Set it if you connect a custom domain. It is used for canonical URLs, social previews and the sitemap.
 - Vercel Web Analytics loads only on the deployed site. Enable it in the project's **Analytics** tab.
 - Social preview image: `public/og-image.jpg`, 1200×630, a capture of the hero.
 - App icons: `public/apple-touch-icon.png`, `icon-192/512.png`, `icon-maskable-512.png` and `site.webmanifest`.

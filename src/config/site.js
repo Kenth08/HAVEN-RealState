@@ -11,7 +11,7 @@ export const site = {
   contact: {
     email: 'kenthrepollo@gmail.com',
     phone: '+63 997 728 7201',
-    offices: ['Los Angeles, California'],
+    offices: ['Philippines'],
   },
   // Credit line in the footer (this is a portfolio piece).
   author: { name: 'Kenth08', url: 'https://github.com/Kenth08' },
